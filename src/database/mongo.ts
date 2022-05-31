@@ -4,13 +4,12 @@ import getConfigDatabase from "@helpers/database.helper";
 const connectMongoose = async (): Promise<void> => {
   try {
     const { db_name, host, port } = getConfigDatabase("mongo");
-    await mongoose.connect(
-      `mongodb:${host}:${port}/${db_name}`
-    );
+    await mongoose.createConnection(`mongodb:${host}:${port}/${db_name}`, {
+      maxPoolSize: 10,
+    });
   } catch (error) {
     console.log(error);
   }
 };
-
 
 export default connectMongoose;
